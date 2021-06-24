@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pikashow</title>
+</head>
+<style>
+    #container{
+        display: flex;
+        flex-direction:column;
+        background-color:#F8F1FF ;
+        align-items: center;
+    }
+    header{
+        background-color: #222222;
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        border-radius: 20px;
+        line-height: 45px;
+        font-size: 35px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: rosybrown;
+    }
+    input{
+        height: 30px;
+        width: 300px;
+        margin-top: 100px;
+        border: 2px rgb(78, 72, 72) solid;
+    }
+    button{
+        margin-top: 30px;
+        background-color: black;
+        height: 30px;
+        width: 150px;
+        color: white;
+    }
+    #movieDetails{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:flex-start;
+        height: 600px;
+        width: 400px;
+        margin-top: 50px;
+        
+    }
+    img{
+        width: 170px;
+    }
+    p{
+        font-size: 20px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        text-align: center;
+        margin: 5px;
+    }
+</style>
+<body>
+    <div id="container">
+        <header>MOVIES</header>
+        <input type="text" name="" id="movie">
+        <button onclick="getWeatherData()">SEARCH</button>
+        <div id="movieDetails"></div>
+    </div>
+</body>
+</html>
+<script>
+    
+    async function getWeatherData(){
+
+        let movie = document.getElementById('movie').value
+        let data = await fetch(`http://www.omdbapi.com/?t=${movie}&i=tt3896198&apikey=7d4812ec`)
+        let finaldata = await data.json()
+        console.log(finaldata);
+        show(finaldata)
+       
+    }
+    function show(d){
+        let Poster = document.createElement('img')
+        Poster.src=`${d.Poster}`
+        let Title = document.createElement('p')
+        Title.innerText=`Title - ${d.Title}`
+        let Year = document.createElement('p')
+        Year.innerText=`Year - ${d.Year}`
+        let Released = document.createElement('p')
+        Released.innerText=`Released - ${d.Released}`
+        let imdbRating = document.createElement('p')
+        imdbRating=`IMDB - ${d.imdbRating}`
+        let Country = document.createElement('p')
+        Country.innerText=`Country - ${d.Country}`
+        let Language = document.createElement('p')
+        Language.innerText= `Language - ${d.Language}`
+
+        
+        let div = document.getElementById('movieDetails')
+        div.append(Poster,Title,Year,Released,Language,Country,imdbRating)
+       // div.append(Title,Year,Released)
+    }
+    
+</script>
